@@ -95,6 +95,17 @@ class UploadRequestToFtp:
                 print(f'{acctidbymxz} upload finished.')
             sleep(10)
 
+    @staticmethod
+    def remote_exist(sftp, path):
+        try:
+            sftp.stat(path)
+        except IOError as e:
+            if 'No such file' in str(e):
+                return False
+            raise
+        else:
+            return True
+
     def dld_dat(self):
         # download rawdata: stock, query, dealdetail
         trans = paramiko.Transport((self.host_apama, self.port_apama))
@@ -117,10 +128,23 @@ class UploadRequestToFtp:
                 fpath_remote_dat_stock = f"{dirpath_remote}/{fn_dat_stock}"
                 fpath_remote_dat_dealdetail = f"{dirpath_remote}/{fn_dat_dealdetail}"
 
-                sftp.get(fpath_remote_dat_fund, fpath_local_dat_fund)
-                sftp.get(fpath_remote_dat_stock, fpath_local_dat_stock)
-                sftp.get(fpath_remote_dat_dealdetail, fpath_local_dat_dealdetail)
+                if self.remote_exist(sftp, fpath_remote_dat_fund):
+                    sftp.get(fpath_remote_dat_fund, fpath_local_dat_fund)
+                else:
+                    with open(fpath_remote_dat_fund, 'w') as f:
+                        pass
 
+                if self.remote_exist(sftp, fpath_remote_dat_stock):
+                    sftp.get(fpath_remote_dat_stock, fpath_local_dat_stock)
+                else:
+                    with open(fpath_remote_dat_stock, 'w') as f:
+                        pass
+
+                if self.remote_exist(sftp, fpath_remote_dat_dealdetail):
+                    sftp.get(fpath_remote_dat_dealdetail, fpath_local_dat_dealdetail)
+                else:
+                    with open(fpath_remote_dat_dealdetail, 'w') as f:
+                        pass
                 print(f'{acctidbymxz} download finished.')
             sleep(10)
 
