@@ -44,8 +44,8 @@ class DldTrdDataFromEHFZApi:
         register_Datacallback(g_serviceid, self._jgtradeapi_data_cb_)
         API_Connect(g_serviceid, c_char_p(b"124.74.252.82"), 8980, False)  # 此处传参： 交易服务器参数
 
-        Login(acctidbybroker, '123321', g_serviceid)
-        QryFund(g_serviceid)
+        log_in(acctidbybroker, '123321', g_serviceid)
+        query_fund(g_serviceid)
         QryHold(g_serviceid)
         QryEntrust(g_serviceid)
         QryBusiness(g_serviceid)

@@ -96,11 +96,13 @@ class JGtdcRspQryMax(Structure):
                ("szBatchNo", c_char * 24),  # 批号
                ("iMaxAmount", c_longlong)]  # 最大可交易数量
 
+
 # 投资者资金查询
 class JGtdcReqQryFund(Structure):
     _fields_ = [("szClientID", c_char * 16),  # 客户号
                 ("nQueryMode", c_int),  # 查询模式 TJGtdcQueryMode
                 ("cMoneyType", c_char)]  # @币种
+
 
 # 投资者资金查询应答
 class JGtdcRspQryFund(Structure):
