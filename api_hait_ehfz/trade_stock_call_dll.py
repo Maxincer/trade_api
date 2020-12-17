@@ -8,15 +8,16 @@ from datetime import datetime
 # 定义接收数据回调函数
 g_clientID = ''
 
-
 def OnRecvData(service_id, funcid, pdata, ndata, pRspInfo, nrequestid):
+    global g_clientID
     ANSINFO = cast(pRspInfo, POINTER(JGtdcRspInfoField))
     print(TRADE_FUNCID_TYPE.JG_FUNCID_STOCK_Login.value)
     if funcid == TRADE_FUNCID_TYPE.JG_FUNCID_STOCK_Login.value:
         if ANSINFO.contents.nResultType == JG_TDC_ANSRESULT_Success:
             Ans = cast(pdata, POINTER(JGtdcRspUserLogin))
-            print("[应答 Link %d]登录成功 客户号 %s" % (service_id, Ans.contents.szClientID.decode("gb2312", errors='ignore')))
-            global g_clientID
+            print(
+                "[应答 Link %d]登录成功 客户号 %s" % (service_id, Ans.contents.szClientID.decode("gb2312", errors='ignore'))
+            )
             g_clientID = Ans.contents.szClientID.decode("gb2312", errors='ignore')
         else:
             print("[应答 Link %d]登录失败， Error： %s" % (
@@ -210,7 +211,7 @@ def OnRecvData(service_id, funcid, pdata, ndata, pRspInfo, nrequestid):
         if ANSINFO.contents.nResultType == JG_TDC_ANSRESULT_Success:
             fpath_cacct_fund = (
                 f"D:/data/trddata/investment_manager_products/hait_ehfz_api/"
-                f"{datetime.today().strftime('%Y%m%d')}_cash_account_fund.csv"
+                f"{datetime.today().strftime('%Y%m%d')}_{g_clientID}_cash_account_fund.csv"  # todo 更改存储的文件名
             )
             with open(fpath_cacct_fund, 'w') as f:
                 i = 0
