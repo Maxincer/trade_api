@@ -1,8 +1,8 @@
 # coding:utf-8
 """python调用今古交易服务Dll库的api接口文件"""
-from jgtrade_api_func_def import *
-from jgtrade_api_data_def import *  # 隐式调用了该文件中的参数，不可删除
-from jgtrade_api_struct_def import *
+from api_hait_ehfz.jgtrade_api_func_def import *
+from api_hait_ehfz.jgtrade_api_data_def import *  # 隐式调用了该文件中的参数，不可删除
+from api_hait_ehfz.jgtrade_api_struct_def import *
 
 
 # 初始化交易服务

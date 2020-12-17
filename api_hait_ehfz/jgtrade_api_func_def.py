@@ -10,7 +10,7 @@ OnTradePushDataCallBack = WINFUNCTYPE(None, c_uint, c_int, c_void_p, c_int)
 
 
 # 加载c格式的dll动态库
-jgtradeapi = windll.LoadLibrary(r'D:\projects\TradeApi_py_v3.0.3\JGTradeApi.dll')
+jgtradeapi = windll.LoadLibrary(r'D:\projects\trade_api\api_hait_ehfz\JGTradeApi.dll')
 
 # 设置调用api的返回值和参数
 

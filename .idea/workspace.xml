@@ -1,18 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1aeaf9fb-63b5-495a-9d99-1c835940a821" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/83909949-6900-4653-b106-68dd736692e5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/trade_api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/trade_api.iml" afterDir="false" />
+    <list default="true" id="71de98b7-a5c0-42c3-a981-d296697ce689" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/trdapi_hait_ehfz.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeApi_py_v3.0.3/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeApi_py_v3.0.3/.idea/TradeApi_py_v3.0.3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/.idea/TradeApi_py_v3.0.3.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeApi_py_v3.0.3/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeApi_py_v3.0.3/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeApi_py_v3.0.3/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeApi_py_v3.0.3/JGCMNetCommunication.dll" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/JGCMNetCommunication.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeApi_py_v3.0.3/JGTradeApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/JGTradeApi.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeApi_py_v3.0.3/globalvar.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/globalvar.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeApi_py_v3.0.3/hait_acct_psw.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/hait_acct_psw.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeApi_py_v3.0.3/jgtrade_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/jgtrade_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeApi_py_v3.0.3/jgtrade_api_data_def.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/jgtrade_api_data_def.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeApi_py_v3.0.3/jgtrade_api_func_def.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/jgtrade_api_func_def.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeApi_py_v3.0.3/jgtrade_api_struct_def.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/jgtrade_api_struct_def.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeApi_py_v3.0.3/jgtrade_query.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/jgtrade_query.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeApi_py_v3.0.3/libcrypto-1_1-x64.dll" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/libcrypto-1_1-x64.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeApi_py_v3.0.3/libssl-1_1-x64.dll" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/libssl-1_1-x64.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeApi_py_v3.0.3/msvcp120.dll" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/msvcp120.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeApi_py_v3.0.3/msvcr120.dll" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/msvcr120.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeApi_py_v3.0.3/temp.csv" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/temp.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeApi_py_v3.0.3/temp.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/temp.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeApi_py_v3.0.3/trade_option_call_dll.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/trade_option_call_dll.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeApi_py_v3.0.3/trade_stock_call_dll.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/trade_stock_call_dll.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trdapi_yh_apama.py" beforeDir="false" afterPath="$PROJECT_DIR$/trdapi_yh_apama.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -26,8 +53,85 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../TradeApi_py_v3.0.3" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RunManager" selected="Python.trdapi_hait_ehfz">
+    <configuration name="jgtrade_api_func_def" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="trade_api" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/TradeApi_py_v3.0.3" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/TradeApi_py_v3.0.3/jgtrade_api_func_def.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="trade_stock_call_dll" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="trade_api" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/TradeApi_py_v3.0.3" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/TradeApi_py_v3.0.3/trade_stock_call_dll.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="trdapi_hait_ehfz" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="trade_api" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/trdapi_hait_ehfz.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.trdapi_hait_ehfz" />
+        <item itemvalue="Python.trade_stock_call_dll" />
+        <item itemvalue="Python.jgtrade_api_func_def" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -43,5 +147,22 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/trade_api$jgtrade_api_func_def.coverage" NAME="jgtrade_api_func_def Coverage Results" MODIFIED="1608186104526" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/TradeApi_py_v3.0.3" />
+    <SUITE FILE_PATH="coverage/trade_api$trade_stock_call_dll.coverage" NAME="trade_stock_call_dll Coverage Results" MODIFIED="1608194081221" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/TradeApi_py_v3.0.3" />
+    <SUITE FILE_PATH="coverage/trade_api$trdapi_hait_ehfz.coverage" NAME="trdapi_hait_ehfz Coverage Results" MODIFIED="1608201208092" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/trade_api$trdapi_yh_apama.coverage" NAME="trdapi_yh_apama Coverage Results" MODIFIED="1608174496352" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

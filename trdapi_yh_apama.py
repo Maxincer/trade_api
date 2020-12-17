@@ -5,32 +5,28 @@
 
 """
 从yh_apama 的ftp下载数据
-土金水木火
 每分钟最多查一笔
-
 当日成交明细查询，每五分钟最多查一笔
 
-Note:
-    1. paramiko 无法进行ftp通信, 使用 ftplib
 """
 
 from datetime import datetime
 import os
 from threading import Thread
-from time import sleep, time
+from time import sleep
 
 import paramiko
 from pymongo import MongoClient
 
 
-class UploadRequestToFtp:
+class GetTrdDataFromApamaFTP:
     def __init__(self):
         self.host_apama = '139.196.103.39'
         self.port_apama = 22
         self.usrname = 'root'
         self.psw = 'llys3,ysykR'
         self.i_uniqueid = 0
-        client_mongodb = MongoClient('mongodb://localhost:27017/')
+        client_mongodb = MongoClient('mongodb://192.168.2.162:27017/')
         db_basicinfo = client_mongodb['basicinfo']
         self.col_acctinfo = db_basicinfo['acctinfo']
         self.dt_today = datetime.today()
@@ -38,6 +34,7 @@ class UploadRequestToFtp:
         self.list_dicts_acctinfo = list(
             self.col_acctinfo.find({'DataDate': self.str_today, 'DataSourceType': 'yh_apama', 'DataDownloadMark': 1})
         )
+        self.dirpath_output = 'D:/data/trddata/investment_manager_products/yh_apama'
 
     def generate_dat(self):
         """
@@ -49,7 +46,7 @@ class UploadRequestToFtp:
             for dict_acctinfo in self.list_dicts_acctinfo:
                 acctidbybroker = dict_acctinfo['AcctIDByBroker']
                 acctid_apama = dict_acctinfo['DownloadDataFilter']
-                dirpath_local = f'data/{acctid_apama}'
+                dirpath_local = f'data/{acctid_apama}' ''
                 if not os.path.exists(dirpath_local):
                     os.mkdir(dirpath_local)
                 fn_dat_query = f'query_{self.str_today}.dat'
@@ -118,7 +115,9 @@ class UploadRequestToFtp:
                 fn_dat_stock = f'stock_{self.str_today}.dat'
                 fn_dat_dealdetail = f'dealdetail_{self.str_today}.dat'
                 acctid_apama = dict_acctinfo['DownloadDataFilter']
-                dirpath_local = f'data/{acctid_apama}'
+                dirpath_local = f'{self.dirpath_output}/{acctid_apama}'
+                if not os.path.exists(dirpath_local):
+                    os.mkdir(dirpath_local)
                 dirpath_remote = f'//home/{acctid_apama}'
                 fpath_local_dat_fund = os.path.join(dirpath_local, fn_dat_fund)
                 fpath_local_dat_stock = os.path.join(dirpath_local, fn_dat_stock)
@@ -130,21 +129,12 @@ class UploadRequestToFtp:
 
                 if self.remote_exist(sftp, fpath_remote_dat_fund):
                     sftp.get(fpath_remote_dat_fund, fpath_local_dat_fund)
-                else:
-                    with open(fpath_remote_dat_fund, 'w') as f:
-                        pass
 
                 if self.remote_exist(sftp, fpath_remote_dat_stock):
                     sftp.get(fpath_remote_dat_stock, fpath_local_dat_stock)
-                else:
-                    with open(fpath_remote_dat_stock, 'w') as f:
-                        pass
 
                 if self.remote_exist(sftp, fpath_remote_dat_dealdetail):
                     sftp.get(fpath_remote_dat_dealdetail, fpath_local_dat_dealdetail)
-                else:
-                    with open(fpath_remote_dat_dealdetail, 'w') as f:
-                        pass
                 print(f'{acctidbymxz} download finished.')
             sleep(10)
 
@@ -158,7 +148,7 @@ class UploadRequestToFtp:
 
 
 if __name__ == '__main__':
-    task = UploadRequestToFtp()
+    task = GetTrdDataFromApamaFTP()
     task.run()
 
 

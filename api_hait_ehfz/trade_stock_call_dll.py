@@ -2,11 +2,12 @@
 """python调用今古交易服务Dll库demo示例文件, Python3.6.1"""
 
 # 引入今古交易api库
-from jgtrade_api import *
+from api_hait_ehfz.jgtrade_api import *
 from datetime import datetime
-import globalvar as gl
 
 # 定义接收数据回调函数
+g_clientID = ''
+
 def OnRecvData(service_id, funcid, pdata, ndata, pRspInfo, nrequestid):
     ANSINFO = cast(pRspInfo, POINTER(JGtdcRspInfoField))
     print("*************funcid")
@@ -15,8 +16,8 @@ def OnRecvData(service_id, funcid, pdata, ndata, pRspInfo, nrequestid):
         if ANSINFO.contents.nResultType == JG_TDC_ANSRESULT_Success:
             Ans = cast(pdata, POINTER(JGtdcRspUserLogin))
             print("[应答 Link %d]登录成功 客户号 %s" % (service_id, Ans.contents.szClientID.decode("gb2312", errors='ignore')))
-            gl._init()
-            gl.g_clientID = Ans.contents.szClientID.decode("gb2312", errors='ignore')
+            global g_clientID
+            g_clientID = Ans.contents.szClientID.decode("gb2312", errors='ignore')
         else:
             print("[应答 Link %d]登录失败， Error： %s" % (service_id, ANSINFO.contents.szErrorInfo.decode("gb2312", errors='ignore')))
     elif funcid == TRADE_FUNCID_TYPE.JG_FUNCID_STOCK_Entrust.value:
@@ -35,7 +36,8 @@ def OnRecvData(service_id, funcid, pdata, ndata, pRspInfo, nrequestid):
     elif funcid == TRADE_FUNCID_TYPE.JG_FUNCID_STOCK_QryBusByPos.value:
         if ANSINFO.contents.nResultType == JG_TDC_ANSRESULT_Success:
             fpath_position = (
-                f"D:/data/trddata/hait_ehfz_api/{datetime.today().strftime('%Y%m%d')}_BusBypos.csv"
+                f"D:/data/trddata/investment_manager_products/hait_ehfz_api/"
+                f"{datetime.today().strftime('%Y%m%d')}_BusBypos.csv"
             )
             with open(fpath_position, 'a') as f:
                 i = 0
@@ -99,7 +101,8 @@ def OnRecvData(service_id, funcid, pdata, ndata, pRspInfo, nrequestid):
     elif funcid == TRADE_FUNCID_TYPE.JG_FUNCID_STOCK_QryHold.value:
         if ANSINFO.contents.nResultType == JG_TDC_ANSRESULT_Success:
             fpath_position = (
-                f"D:/data/trddata/hait_ehfz_api/{datetime.today().strftime('%Y%m%d')}_position.csv"
+                f"D:/data/trddata/investment_manager_products/hait_ehfz_api/"
+                f"{datetime.today().strftime('%Y%m%d')}_position.csv"
             )
             with open(fpath_position, 'w') as f:
                 i = 0
@@ -224,7 +227,10 @@ def OnRecvData(service_id, funcid, pdata, ndata, pRspInfo, nrequestid):
             print("[应答 Link %d]资金查询失败， Error： %s" % (service_id, ANSINFO.contents.szErrorInfo.decode("gb2312", errors='ignore')))
     elif funcid == TRADE_FUNCID_TYPE.JG_FUNCID_CREDIT_QryAssets.value:
         if ANSINFO.contents.nResultType == JG_TDC_ANSRESULT_Success:
-            fpath_cacct_fund = f"D:/data/trddata/hait_ehfz_api/{datetime.today().strftime('%Y%m%d')}_credit_asset.csv"
+            fpath_cacct_fund = (
+                f"D:/data/trddata/investment_manager_products/hait_ehfz_api/"
+                f"{datetime.today().strftime('%Y%m%d')}_credit_asset.csv"
+            )
             with open(fpath_cacct_fund, 'w') as f:
                 i = 0
                 list_keys_cacct_fund = ['资金账号', '币种', '可用余额', '可取余额', '冻结金额', '证券市值', '资金余额', '资产总值', '总盈亏']
@@ -277,12 +283,7 @@ def OnNoticeData(service_id, linktype, errorinfo):
     else:
         print("未知的通知...")
 
-# 创建回掉函数对象
-_jgtradeapi_notice_cb_ = OnTradeLinkCallBack(OnNoticeData)
-_jgtradeapi_data_cb_ = OnTradeDataCallBack(OnRecvData)
-
-
-def Login(account, password, trade_funcid_type, g_serviceid):
+def Login(account, password, g_serviceid):
     login = JGtdcReqUserLogin()
     login.cLoginType = bytes(JG_TDC_LOGINTYPE_FundAccount, encoding="gb2312")
     login.szLoginCode = bytes(account, encoding="gb2312")
@@ -291,90 +292,34 @@ def Login(account, password, trade_funcid_type, g_serviceid):
     login.szIPAddress = bytes("192.168.1.248", encoding="gb2312")
     login.szMD5 = bytes("", encoding="gb2312")
     temp = cast(pointer(login), c_char_p)
-    if (0 == API_TradeSend(g_serviceid, trade_funcid_type.value, temp, 1, 0)):
+    if (0 == API_TradeSend(g_serviceid, TRADE_FUNCID_TYPE.JG_FUNCID_STOCK_Login.value, temp, 1, 0)):
         print("发送登录成功")
     else:
         print("发送登录失败")
 
-def Entrust():
-    nItem = 2
-    req = (JGtdcReqOrderInsert * nItem)()
-    req[0].szClientID = bytes(g_clientID, encoding="gb2312")
-    req[0].szStockCode = bytes("000001", encoding="gb2312")
-    req[0].nExchangeType = TJGtdcExchangeType.JG_TDC_EXCHANGETYPE_SZA.value
-    req[0].nTradeType = JG_TDC_TRADETYPE_Buy
-    req[0].iEntrustPrice = c_longlong(100000)
-    req[0].iEntrustAmount = 500
-    req[0].nPriceType = JG_TDC_PRICETYPE_Limit
-
-    req[1].szClientID = bytes(g_clientID, encoding="gb2312")
-    req[1].szStockCode = bytes("600000", encoding="gb2312")
-    req[1].nExchangeType = TJGtdcExchangeType.JG_TDC_EXCHANGETYPE_SHA.value
-    req[1].nTradeType = JG_TDC_TRADETYPE_Buy
-    req[1].iEntrustPrice = 53400
-    req[1].iEntrustAmount = 1000
-    req[1].nPriceType = JG_TDC_PRICETYPE_Limit
-
-    temp = cast(pointer(req), c_char_p)
-    if (0 == API_TradeSend(g_serviceid, TRADE_FUNCID_TYPE.JG_FUNCID_STOCK_Entrust.value, temp, nItem, 0)):
-        i = 0
-        while i< nItem:
-            print("下单请求：代码：%s, 市场：%d, 买卖方向：%d, 价格：%d,数量：%d" %
-                  (req[i].szStockCode.decode("gb2312", errors = 'ignore'), req[i].nExchangeType, req[i].nTradeType, req[i].iEntrustPrice, req[i].iEntrustAmount))
-            i = i+1
-    else:
-        print("下单失败")
-
-def Cancel():
-    req = JGtdcReqOrderCancel()
-    print("请输入要撤单的合同号：")
-    szEntrust = input()
-    req.szEntrustNo = bytes(szEntrust, encoding="gb2312")
-    req.szClientID = bytes(g_clientID, encoding="gb2312")
-    req.nExchangeType = 2
-
-    temp = cast(pointer(req), c_char_p)
-    if (0 == API_TradeSend(g_serviceid, TRADE_FUNCID_TYPE.JG_FUNCID_STOCK_Cancel.value, temp, 1, 0)):
-        print("发送撤单成功")
-    else:
-        print("发送撤单失败")
-
-def QryCancel():
-    req = JGtdcReqQryCancel()
-    req.szClientID = bytes(g_clientID, encoding="gb2312")
-    req.nQueryMode = TJGtdcQueryMode.JG_TDC_QUERYMODE_All.value
-    req.nQueryDirection = int(bytes(JG_TDC_QUERYDIRECTION_Inverted, encoding="gb2312"))
-
-    temp = cast(pointer(req), c_char_p)
-    if (0 == API_TradeSend(g_serviceid, TRADE_FUNCID_TYPE.JG_FUNCID_STOCK_QryRevocEnt.value, temp, 1, 0)):
-        print("查询可撤单成功")
-    else:
-        print("查询可撤单失败")
-
-def QryEntrust():
+def QryEntrust(g_serviceid):
     req = JGtdcReqQryOrder()
     req.szClientID = bytes(g_clientID, encoding="gb2312")
     req.nQueryMode = TJGtdcQueryMode.JG_TDC_QUERYMODE_All.value
     req.nQueryDirection = int(bytes(JG_TDC_QUERYDIRECTION_Inverted, encoding="gb2312"))
-
     temp = cast(pointer(req), c_char_p)
     if (0 == API_TradeSend(g_serviceid, TRADE_FUNCID_TYPE.JG_FUNCID_STOCK_QryEntrust.value, temp, 1, 0)):
         print("查询委托成功")
     else:
         print("查询委托失败")
 
-def QryBusiness(trade_funcid_type, g_clientID):
+def QryBusiness(g_serviceid):
     req = JGtdcReqQryTrade()
     req.szClientID = bytes(g_clientID, encoding="gb2312")
     req.nQueryMode = TJGtdcQueryMode.JG_TDC_QUERYMODE_All.value
     req.nQueryDirection = int(bytes(JG_TDC_QUERYDIRECTION_Inverted, encoding="gb2312"))
     temp = cast(pointer(req), c_char_p)
-    if (0 == API_TradeSend(g_serviceid, trade_funcid_type.value, temp, 1, 0)):
+    if (0 == API_TradeSend(g_serviceid, TRADE_FUNCID_TYPE.JG_FUNCID_STOCK_QryBusByPos, temp, 1, 0)):
         print("查询成交成功")
     else:
         print("查询成交失败")
 
-def QryHold():
+def QryHold(g_serviceid):
     req = JGtdcReqQryHold()
     req.szClientID = bytes(g_clientID, encoding="gb2312")
     req.nQueryMode = TJGtdcQueryMode.JG_TDC_QUERYMODE_All.value
@@ -385,7 +330,7 @@ def QryHold():
     else:
         print("查询持仓失败")
 
-def QryFund():
+def QryFund(g_serviceid):
     req = JGtdcReqQryFund()
     req.szClientID = bytes(g_clientID, encoding="gb2312")
     req.nQueryMode = TJGtdcQueryMode.JG_TDC_QUERYMODE_All.value
@@ -395,7 +340,7 @@ def QryFund():
     else:
         print("查询资金失败")
 
-def QryShortsell():
+def QryShortsell(g_serviceid):
     req = JGtdcReqQryHold()
     req.szClientID = bytes(g_clientID, encoding="gb2312")
     req.nQueryMode = TJGtdcQueryMode.JG_TDC_QUERYMODE_All.value
@@ -406,28 +351,15 @@ def QryShortsell():
     else:
         print("查询融券状况失败")
 
-def QryMax():
-    req = JGtdcReqQryMax()
-    req.szClientID = bytes(g_clientID, encoding="gb2312")
-    req.nExchangeType = TJGtdcExchangeType.JG_TDC_EXCHANGETYPE_SHA.value
-    req.szStockCode = bytes("600000", encoding="gb2312")
-    req.nTradeType = JG_TDC_TRADETYPE_Buy
-    req.nPriceType = JG_TDC_PRICETYPE_Limit
-    req.iEntrustPrice = c_longlong(88000)
-    temp = cast(pointer(req), c_char_p)
-    if (0 == API_TradeSend(g_serviceid, TRADE_FUNCID_TYPE.JG_FUNCID_STOCK_QryMax.value, temp, 1, 0)):
-        print("最大交易数量查询成功")
-    else:
-        print("最大交易数量查询失败")
+
+# 创建回掉函数对象
+_jgtradeapi_notice_cb_ = OnTradeLinkCallBack(OnNoticeData)
+_jgtradeapi_data_cb_ = OnTradeDataCallBack(OnRecvData)
 
 
 # 主函数
 if __name__ == "__main__":
-    print("start")
-
-    # 初始化服务
     API_Start()
-
     # 创建服务
     # global g_serviceid
     # 此处传参：账户类型； serviceid: Bool 表示创建service是否成功，与 service type 不一样
@@ -443,7 +375,7 @@ if __name__ == "__main__":
     while 1:
         n = input()
         if int(n) == 0:
-            Login("0920111727", "123321", TRADE_FUNCID_TYPE.JG_FUNCID_STOCK_Login,g_serviceid)
+            Login("0920111727", "123321", TRADE_FUNCID_TYPE.JG_FUNCID_STOCK_Login, g_serviceid)
             print(gl.g_clientID)
         elif int(n) == 1:
             print("下单")
@@ -459,7 +391,7 @@ if __name__ == "__main__":
             QryEntrust()
         elif int(n) == 5:
             print("成交查询")
-            QryBusiness(TRADE_FUNCID_TYPE.JG_FUNCID_STOCK_QryBusByPos)
+            QryBusiness(TRADE_FUNCID_TYPE.JG_FUNCID_STOCK_QryBusByPos, g_clientID)
         elif int(n) == 6:
             print("持仓查询")
             QryHold()
@@ -476,7 +408,7 @@ if __name__ == "__main__":
             print("融券负债情况查询")
             QryShortsell()
         elif int(n) == 11:
-            Login("0790888666", "123321",TRADE_FUNCID_TYPE.JG_FUNCID_STOCK_Login,g_serviceid)
+            Login("0790888666", "123321", TRADE_FUNCID_TYPE.JG_FUNCID_STOCK_Login, g_serviceid)
         else:
             print("未知指令,请重新输入：[1]下单, [2]撤单, [3]可撤单查询, [4]委托查询, [5]成交查询, [6]持仓查询, [7]资金查询, [8]最大交易数量查询, [9]退出")
 
