@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="71de98b7-a5c0-42c3-a981-d296697ce689" name="Default Changelist" comment="update">
+    <list default="true" id="71de98b7-a5c0-42c3-a981-d296697ce689" name="Default Changelist" comment="update ehfz">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api_hait_ehfz/jgtrade_api_data_def.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/jgtrade_api_data_def.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api_hait_ehfz/jgtrade_api_struct_def.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/jgtrade_api_struct_def.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api_hait_ehfz/trade_stock_call_dll.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/trade_stock_call_dll.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trdapi_hait_ehfz.py" beforeDir="false" afterPath="$PROJECT_DIR$/trdapi_hait_ehfz.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,7 +145,7 @@
       <workItem from="1608185665606" duration="30000" />
       <workItem from="1608258676449" duration="29939000" />
       <workItem from="1608517639665" duration="2232000" />
-      <workItem from="1608521396077" duration="3660000" />
+      <workItem from="1608521396077" duration="3713000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1608201272270</created>
@@ -172,7 +168,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608212758199</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="update ehfz">
+      <created>1608532311563</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1608532311563</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -192,7 +195,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update" />
-    <option name="LAST_COMMIT_MESSAGE" value="update" />
+    <MESSAGE value="update ehfz" />
+    <option name="LAST_COMMIT_MESSAGE" value="update ehfz" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/trade_api$jgtrade_api_func_def.coverage" NAME="jgtrade_api_func_def Coverage Results" MODIFIED="1608186104526" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/TradeApi_py_v3.0.3" />
