@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="71de98b7-a5c0-42c3-a981-d296697ce689" name="Default Changelist" comment="update ehfz">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api_hait_ehfz/trade_stock_call_dll.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_hait_ehfz/trade_stock_call_dll.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trdapi_hait_ehfz.py" beforeDir="false" afterPath="$PROJECT_DIR$/trdapi_hait_ehfz.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +147,7 @@
       <workItem from="1608185665606" duration="30000" />
       <workItem from="1608258676449" duration="29939000" />
       <workItem from="1608517639665" duration="2232000" />
-      <workItem from="1608521396077" duration="3713000" />
+      <workItem from="1608521396077" duration="14427000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1608201272270</created>
@@ -175,7 +177,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608532311563</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="update ehfz">
+      <created>1608532525734</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1608532525734</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -201,8 +210,8 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/trade_api$jgtrade_api_func_def.coverage" NAME="jgtrade_api_func_def Coverage Results" MODIFIED="1608186104526" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/TradeApi_py_v3.0.3" />
     <SUITE FILE_PATH="coverage/trade_api$trade_stock_call_dll.coverage" NAME="trade_stock_call_dll Coverage Results" MODIFIED="1608194081221" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/TradeApi_py_v3.0.3" />
-    <SUITE FILE_PATH="coverage/trade_api$trade_stock_call_dll__1_.coverage" NAME="trade_stock_call_dll (1) Coverage Results" MODIFIED="1608290629694" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api_hait_ehfz" />
-    <SUITE FILE_PATH="coverage/trade_api$trdapi_hait_ehfz.coverage" NAME="trdapi_hait_ehfz Coverage Results" MODIFIED="1608290868774" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/trade_api$trade_stock_call_dll__1_.coverage" NAME="trade_stock_call_dll (1) Coverage Results" MODIFIED="1608539234013" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api_hait_ehfz" />
+    <SUITE FILE_PATH="coverage/trade_api$trdapi_hait_ehfz.coverage" NAME="trdapi_hait_ehfz Coverage Results" MODIFIED="1608543826054" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/trade_api$trdapi_yh_apama.coverage" NAME="trdapi_yh_apama Coverage Results" MODIFIED="1608174496352" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

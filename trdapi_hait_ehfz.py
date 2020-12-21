@@ -3,6 +3,7 @@
 # Author: Maxincer
 # CreateDateTime: 20201217T160000
 
+from concurrent.futures import ThreadPoolExecutor
 from ctypes import *
 from datetime import datetime
 from time import sleep
@@ -38,41 +39,51 @@ class DldTrdDataFromEHFZApi:
             register_Linkcallback(self.g_serviceid, self._jgtradeapi_notice_cb_)
             register_Datacallback(self.g_serviceid, self._jgtradeapi_data_cb_)
             API_Connect(self.g_serviceid, c_char_p(b"124.74.252.82"), 8980, False)  # 此处传参： 交易服务器参数
+            sleep(0.1)
             log_in(acctidbybroker, '123321', self.g_serviceid)
-            while True:
-                query_cacct_fund(self.g_serviceid)
-                query_cacct_holding(self.g_serviceid)
-                query_cacct_trade(self.g_serviceid)
-                sleep(5)
+            sleep(1)
+            query_cacct_fund(self.g_serviceid)
+            sleep(0.2)
+            query_cacct_holding(self.g_serviceid)
+            sleep(0.2)
+            query_cacct_trade(self.g_serviceid)
+            sleep(0.2)
+            API_DisConnect(self.g_serviceid)
 
         elif accttype in ['m']:
             self.g_serviceid = API_CreateService(TRADETYPE.TD_CREDIT.value)
             register_Linkcallback(self.g_serviceid, self._jgtradeapi_notice_cb_)
             register_Datacallback(self.g_serviceid, self._jgtradeapi_data_cb_)
             API_Connect(self.g_serviceid, c_char_p(b"124.74.252.82"), 8980, False)  # 此处传参： 交易服务器参数
+            sleep(0.1)
             log_in(acctidbybroker, '123321', self.g_serviceid)
-            while True:
-                query_macct_fund(self.g_serviceid)
-                query_macct_holding(self.g_serviceid)
-                query_macct_trade(self.g_serviceid)
-                query_short_sell(self.g_serviceid)
-                print('sleep')
-                sleep(5)
+            sleep(1)
+
+            query_macct_fund(self.g_serviceid)
+            sleep(0.2)
+            query_macct_holding(self.g_serviceid)
+            sleep(0.2)
+            query_macct_trade(self.g_serviceid)
+            sleep(0.2)
+            query_short_sell(self.g_serviceid)
+            sleep(0.2)
+            API_DisConnect(self.g_serviceid)
+
+        elif accttype in ['f', 'o']:
+            pass
 
         else:
             raise ValueError('Unknown account type, please check.')
 
     def run(self):
-        self.dlddata_by_acctidbymxz('0920111727', 'c')
-        print("Done")
-
-        # iter_dict_acctinfo = self.col_acctinfo.find(
-        #     {'DataDate': self.str_today, 'DataSourceType': 'hait_ehfz', 'DataDownloadMark': 1}
-        # )
-        # for dict_acctinfo in iter_dict_acctinfo:
-        #     acctidbybroker = dict_acctinfo['AcctIDByBroker']
-        #     accttype = dict_acctinfo['AcctType']
-        #     self.dlddata_by_acctidbymxz(acctidbybroker, accttype)
+        # 必为多线程
+        while True:
+            for dict_acctinfo in self.list_dicts_acctinfo:
+                acctidbybroker = dict_acctinfo['AcctIDByBroker']
+                accttype = dict_acctinfo['AcctType']
+                self.dlddata_by_acctidbymxz(acctidbybroker, accttype)
+                print(f'{acctidbybroker} dld finished.')
+            sleep(3)
 
 
 if __name__ == '__main__':

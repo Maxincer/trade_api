@@ -337,12 +337,11 @@ def OnRecvData(service_id, funcid, pdata, ndata, pRspInfo, nrequestid):
                 '@负债现状', '发生日期', '发生数量', '发生金额', '归还数量', '归还金额',
             ]
             fpath_security_loan_contract = (
-                f"D:/data/trddata/hait_ehfz_api/"
-                f"{datetime.today().strftime('%Y%m%d')}_{g_clientID}_margin_account_security_loan.csv"
+                f"D:/data/trddata/investment_manager_products/hait_ehfz_api"
+                f"/{datetime.today().strftime('%Y%m%d')}_{g_clientID}_margin_account_security_loan.csv"
             )
             with open(fpath_security_loan_contract, 'w') as f:
                 f.write(','.join(list_keys_security_loan_contract) + '\n')
-
                 while i < ANSINFO.contents.nFieldItem:
                     offset = i * sizeof(JGtdcRspQryShortsell)
                     pTmpData = pdata + offset
@@ -468,19 +467,19 @@ def query_macct_trade(__g_serviceid):
     req.nQueryMode = TJGtdcQueryMode.JG_TDC_QUERYMODE_All.value
     req.nQueryDirection = int(bytes(JG_TDC_QUERYDIRECTION_Inverted, encoding="gb2312"))
     temp = cast(pointer(req), c_char_p)
-    if 0 == API_TradeSend(__g_serviceid, TRADE_FUNCID_TYPE.JG_FUNCID_CREDIT_QryBusByPos, temp, 1, 0):
+    if 0 == API_TradeSend(__g_serviceid, TRADE_FUNCID_TYPE.JG_FUNCID_CREDIT_QryBusByPos.value, temp, 1, 0):
         print("查询成交成功")
     else:
         print("查询成交失败")
 
 
-def query_short_sell(g_serviceid):
+def query_short_sell(__g_serviceid):
     req = JGtdcReqQryHold()
     req.szClientID = bytes(g_clientID, encoding="gb2312")
     req.nQueryMode = TJGtdcQueryMode.JG_TDC_QUERYMODE_All.value
     req.nQueryDirection = int(bytes(JG_TDC_QUERYDIRECTION_Inverted, encoding="gb2312"))
     temp = cast(pointer(req), c_char_p)
-    if (0 == API_TradeSend(g_serviceid, TRADE_FUNCID_TYPE.JG_FUNCID_CREDIT_QryShortsell.value, temp, 1, 0)):
+    if 0 == API_TradeSend(__g_serviceid, TRADE_FUNCID_TYPE.JG_FUNCID_CREDIT_QryShortsell.value, temp, 1, 0):
         print("查询融券状况成功")
     else:
         print("查询融券状况失败")
