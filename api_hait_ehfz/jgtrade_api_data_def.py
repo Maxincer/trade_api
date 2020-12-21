@@ -117,6 +117,7 @@ class TJGtdcExchangeType(Enum):
     JG_TDC_EXCHANGETYPE_CZCE   = 102 # 郑州商品期货
     JG_TDC_EXCHANGETYPE_DCE	= 103 # 大连商品期货
 
+
 # 查询模式
 class TJGtdcQueryMode(Enum):
     JG_TDC_QUERYMODE_All = 0  # 查询全部

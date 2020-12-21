@@ -5,6 +5,7 @@
 
 from ctypes import *
 from datetime import datetime
+from time import sleep
 
 from pymongo import MongoClient
 
@@ -16,8 +17,6 @@ from api_hait_ehfz.jgtrade_api_data_def import *
 
 class DldTrdDataFromEHFZApi:
     def __init__(self):
-        self.host_apama = '139.196.103.39'
-        self.port_apama = 22
         client_mongodb = MongoClient('mongodb://192.168.2.162:27017/')
         db_basicinfo = client_mongodb['basicinfo']
         self.col_acctinfo = db_basicinfo['acctinfo']
@@ -27,34 +26,45 @@ class DldTrdDataFromEHFZApi:
             self.col_acctinfo.find({'DataDate': self.str_today, 'DataSourceType': 'hait_ehfz', 'DataDownloadMark': 1})
         )
         self.dirpath_output = 'D:/data/trddata/investment_manager_products/hait_ehfz'
+        self.g_serviceid = ''
         self._jgtradeapi_notice_cb_ = OnTradeLinkCallBack(OnNoticeData)
         self._jgtradeapi_data_cb_ = OnTradeDataCallBack(OnRecvData)
         API_Start()
 
     def dlddata_by_acctidbymxz(self, acctidbybroker, accttype):
         # 账户类型调整: 现金账户 vs 保证金账户
-        global g_serviceid
         if accttype in ['c']:
-            g_serviceid = API_CreateService(TRADETYPE.TD_STOCK.value)
-        elif accttype in ['m']:
-            g_serviceid = API_CreateService(TRADETYPE.TD_CREDIT.value)
-        else:
-            raise ValueError('Unknown account type.')
-        register_Linkcallback(g_serviceid, self._jgtradeapi_notice_cb_)
-        register_Datacallback(g_serviceid, self._jgtradeapi_data_cb_)
-        API_Connect(g_serviceid, c_char_p(b"124.74.252.82"), 8980, False)  # 此处传参： 交易服务器参数
+            self.g_serviceid = API_CreateService(TRADETYPE.TD_STOCK.value)
+            register_Linkcallback(self.g_serviceid, self._jgtradeapi_notice_cb_)
+            register_Datacallback(self.g_serviceid, self._jgtradeapi_data_cb_)
+            API_Connect(self.g_serviceid, c_char_p(b"124.74.252.82"), 8980, False)  # 此处传参： 交易服务器参数
+            log_in(acctidbybroker, '123321', self.g_serviceid)
+            while True:
+                query_cacct_fund(self.g_serviceid)
+                query_cacct_holding(self.g_serviceid)
+                query_cacct_trade(self.g_serviceid)
+                sleep(5)
 
-        log_in(acctidbybroker, '123321', g_serviceid)
-        query_fund(g_serviceid)
-        QryHold(g_serviceid)
-        QryEntrust(g_serviceid)
-        QryBusiness(g_serviceid)
-        QryShortsell(g_serviceid)
-        print(f'{acctidbybroker} trddata download finished.')
+        elif accttype in ['m']:
+            self.g_serviceid = API_CreateService(TRADETYPE.TD_CREDIT.value)
+            register_Linkcallback(self.g_serviceid, self._jgtradeapi_notice_cb_)
+            register_Datacallback(self.g_serviceid, self._jgtradeapi_data_cb_)
+            API_Connect(self.g_serviceid, c_char_p(b"124.74.252.82"), 8980, False)  # 此处传参： 交易服务器参数
+            log_in(acctidbybroker, '123321', self.g_serviceid)
+            while True:
+                query_macct_fund(self.g_serviceid)
+                query_macct_holding(self.g_serviceid)
+                query_macct_trade(self.g_serviceid)
+                query_short_sell(self.g_serviceid)
+                print('sleep')
+                sleep(5)
+
+        else:
+            raise ValueError('Unknown account type, please check.')
 
     def run(self):
         self.dlddata_by_acctidbymxz('0920111727', 'c')
-
+        print("Done")
 
         # iter_dict_acctinfo = self.col_acctinfo.find(
         #     {'DataDate': self.str_today, 'DataSourceType': 'hait_ehfz', 'DataDownloadMark': 1}
