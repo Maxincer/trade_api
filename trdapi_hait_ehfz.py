@@ -76,14 +76,13 @@ class DldTrdDataFromEHFZApi:
             raise ValueError('Unknown account type, please check.')
 
     def run(self):
-        # 必为多线程
         while True:
             for dict_acctinfo in self.list_dicts_acctinfo:
                 acctidbybroker = dict_acctinfo['AcctIDByBroker']
                 accttype = dict_acctinfo['AcctType']
                 self.dlddata_by_acctidbymxz(acctidbybroker, accttype)
                 print(f'{acctidbybroker} dld finished.')
-            sleep(3)
+            sleep(10)
 
 
 if __name__ == '__main__':

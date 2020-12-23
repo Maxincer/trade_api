@@ -129,13 +129,16 @@ class GetTrdDataFromApamaFTP:
 
                 if self.remote_exist(sftp, fpath_remote_dat_fund):
                     sftp.get(fpath_remote_dat_fund, fpath_local_dat_fund)
+                    print(f'{acctidbymxz} download finished.')
 
                 if self.remote_exist(sftp, fpath_remote_dat_stock):
                     sftp.get(fpath_remote_dat_stock, fpath_local_dat_stock)
+                    print(f'{acctidbymxz} download finished.')
 
                 if self.remote_exist(sftp, fpath_remote_dat_dealdetail):
                     sftp.get(fpath_remote_dat_dealdetail, fpath_local_dat_dealdetail)
-                print(f'{acctidbymxz} download finished.')
+                    print(f'{acctidbymxz} download finished.')
+
             sleep(10)
 
     def run(self):
