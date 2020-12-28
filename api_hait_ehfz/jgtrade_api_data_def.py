@@ -17,6 +17,7 @@ class LINK_NOTICE_TYPE(Enum):
     LINK_NOTICE_TYPE_DISCONNECTED = 4        # 连接断开
     LINK_NOTICE_TYPE_ERRORINFO = 5           # 错误信息
 
+
 class TRADE_FUNCID_TYPE(Enum):
     JG_FUNCID_TRD_MACHINEINFO = 110000      # 设置用户机器信息
     JG_FUNCID_STOCK_Login = 110100          # 账号登陆

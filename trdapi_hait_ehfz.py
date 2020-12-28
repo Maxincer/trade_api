@@ -18,7 +18,7 @@ from api_hait_ehfz.jgtrade_api_data_def import *
 
 class DldTrdDataFromEHFZApi:
     def __init__(self):
-        client_mongodb = MongoClient('mongodb://192.168.2.162:27017/')
+        client_mongodb = MongoClient('mongodb://192.168.2.162:27017/', username='Maxincer', password='winnerismazhe')
         db_basicinfo = client_mongodb['basicinfo']
         self.col_acctinfo = db_basicinfo['acctinfo']
         self.dt_today = datetime.today()
@@ -46,8 +46,10 @@ class DldTrdDataFromEHFZApi:
             sleep(0.2)
             query_cacct_holding(self.g_serviceid)
             sleep(0.2)
+            query_cacct_order(self.g_serviceid)
+            sleep(5)
             query_cacct_trade(self.g_serviceid)
-            sleep(0.2)
+            sleep(5)
             API_DisConnect(self.g_serviceid)
 
         elif accttype in ['m']:
@@ -64,9 +66,9 @@ class DldTrdDataFromEHFZApi:
             query_macct_holding(self.g_serviceid)
             sleep(0.2)
             query_macct_trade(self.g_serviceid)
-            sleep(0.2)
+            sleep(5)
             query_short_sell(self.g_serviceid)
-            sleep(0.2)
+            sleep(5)
             API_DisConnect(self.g_serviceid)
 
         elif accttype in ['f', 'o']:

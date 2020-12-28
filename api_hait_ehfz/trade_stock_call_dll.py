@@ -29,7 +29,7 @@ def OnRecvData(service_id, funcid, pdata, ndata, pRspInfo, nrequestid):
         if ANSINFO.contents.nResultType == JG_TDC_ANSRESULT_Success:
             fpath_cacct_fund = (
                 f"D:/data/trddata/investment_manager_products/hait_ehfz_api/"
-                f"{datetime.today().strftime('%Y%m%d')}_{g_clientID}_cash_account_fund.csv"
+                f"{datetime.today().strftime('%Y%m%d')}_{g_clientID}_fund.csv"
             )
             with open(fpath_cacct_fund, 'w') as f:
                 i = 0
@@ -65,7 +65,7 @@ def OnRecvData(service_id, funcid, pdata, ndata, pRspInfo, nrequestid):
         if ANSINFO.contents.nResultType == JG_TDC_ANSRESULT_Success:
             fpath_holding = (
                 f"D:/data/trddata/investment_manager_products/hait_ehfz_api/"
-                f"{datetime.today().strftime('%Y%m%d')}_{g_clientID}_cash_account_holding.csv"
+                f"{datetime.today().strftime('%Y%m%d')}_{g_clientID}_holding.csv"
             )
             with open(fpath_holding, 'w') as f:
                 i = 0
@@ -101,16 +101,75 @@ def OnRecvData(service_id, funcid, pdata, ndata, pRspInfo, nrequestid):
             print("[应答 Link %d]持仓查询失败， Error： %s" % (
             service_id, ANSINFO.contents.szErrorInfo.decode("gb2312", errors='ignore')))
 
+    # 查询普通户委托
+    elif funcid == TRADE_FUNCID_TYPE.JG_FUNCID_STOCK_QryEntrust.value:
+        if ANSINFO.contents.nResultType == JG_TDC_ANSRESULT_Success:
+            fpath_cash_account_order = (
+                f"D:/data/trddata/investment_manager_products/hait_ehfz_api/"
+                f"{datetime.today().strftime('%Y%m%d')}_{g_clientID}_order.csv"
+            )
+            with open(fpath_cash_account_order, 'w') as f:
+                list_fields_cacct_order = [
+                    '营业部号', '客户号', '资金账号', '市场类型', '股东代码', '席位号', '证券代码', '证券名称', '定位串', '合同号',
+                    '@币种', '@委托状态', '@交易类型', '@价格类型', '委托日期', '委托时间', '委托数量', '委托价格',
+                    '成交数量', '成交价格', '撤销数量', '成交金额', '业务类型'
+                ]
+                str_fields_cacct_order = ','.join(list_fields_cacct_order) + '\n'
+                f.write(str_fields_cacct_order)
+
+            with open(fpath_cash_account_order, 'a') as f:
+                i = 0
+                while i < ANSINFO.contents.nFieldItem:
+                    offset = i * sizeof(JGtdcRspQryOrder)
+                    pTmpData = pdata + offset
+                    Ans = cast(pTmpData, POINTER(JGtdcRspQryOrder))
+                    list_values_cacct_order = [
+                        str(x) for x in [
+                            Ans.contents.szBranchNo.decode('gbk', errors='ignore'),
+                            Ans.contents.szClientID.decode('gbk', errors='ignore'),
+                            Ans.contents.szFundAccount.decode("gb2312", errors='ignore'),
+                            Ans.contents.nExchangeType,
+                            Ans.contents.szStockAccount.decode("gb2312", errors='ignore'),
+                            Ans.contents.szSeatNo.decode("gb2312", errors='ignore'),
+                            Ans.contents.szStockCode.decode("gb2312", errors='ignore'),
+                            Ans.contents.szStockName.decode("gb2312", errors='ignore'),
+                            Ans.contents.szPositionStr.decode("gb2312", errors='ignore'),
+                            Ans.contents.szEntrustNo.decode("gb2312", errors='ignore'),
+                            Ans.contents.cMoneyType.decode("gb2312", errors='ignore'),
+                            Ans.contents.cEntrustStatus.decode("gb2312", errors='ignore'),
+                            Ans.contents.nTradeType,
+                            Ans.contents.nPriceType,
+                            Ans.contents.nEntrustDate,
+                            Ans.contents.nEntrustTime,
+                            Ans.contents.iEntrustAmount,
+                            Ans.contents.iEntrustPrice,
+                            Ans.contents.iBusinessAmount,
+                            Ans.contents.iBusinessPrice,
+                            Ans.contents.iCancelAmount,
+                            Ans.contents.dBusinessBalance,
+                            Ans.contents.nServiceType,
+                        ]
+                    ]
+                    str_dataline_csv_order = ','.join(list_values_cacct_order)
+                    f.write(str_dataline_csv_order + '\n')
+                    i = i + 1
+            print("成交查询个数： %d" % ANSINFO.contents.nFieldItem)
+        else:
+            print(
+                "[应答 Link %d]成交查询失败， Error： %s"
+                % (service_id, ANSINFO.contents.szErrorInfo.decode("gb2312", errors='ignore'))
+            )
+
     # 查询普通户成交
     elif funcid == TRADE_FUNCID_TYPE.JG_FUNCID_STOCK_QryBusByPos.value:
         if ANSINFO.contents.nResultType == JG_TDC_ANSRESULT_Success:
             fpath_busbypos = (
                 f"D:/data/trddata/investment_manager_products/hait_ehfz_api/"
-                f"{datetime.today().strftime('%Y%m%d')}_{g_clientID}_cash_account_trade.csv"
+                f"{datetime.today().strftime('%Y%m%d')}_{g_clientID}_trade.csv"
             )
             with open(fpath_busbypos, 'w') as f:
                 list_fields_cacct_busbypos = [
-                    '客户号', '资金账号', '市场类型', '股东代码', '席位号', '证券代码', '证券名称', '定位串', '合同号',
+                    '营业部号', '客户号', '资金账号', '市场类型', '股东代码', '席位号', '证券代码', '证券名称', '定位串', '合同号',
                     '成交编号', '@币种', '@成交状态', '@交易类型', '@价格类型', '成交日期', '成交时间', '委托数量', '委托价格',
                     '成交数量', '成交价格', '撤销数量', '成交金额'
                 ]
@@ -144,8 +203,6 @@ def OnRecvData(service_id, funcid, pdata, ndata, pRspInfo, nrequestid):
                             Ans.contents.nBusinessTime,
                             Ans.contents.iEntrustAmount,
                             Ans.contents.iEntrustPrice,
-                            Ans.contents.iEntrustAmount,
-                            Ans.contents.iEntrustPrice,
                             Ans.contents.iBusinessAmount,
                             Ans.contents.iBusinessPrice,
                             Ans.contents.iCancelAmount,
@@ -168,7 +225,7 @@ def OnRecvData(service_id, funcid, pdata, ndata, pRspInfo, nrequestid):
         if ANSINFO.contents.nResultType == JG_TDC_ANSRESULT_Success:
             fpath_macct_fund = (
                 f"D:/data/trddata/investment_manager_products/hait_ehfz_api/"
-                f"{datetime.today().strftime('%Y%m%d')}_{g_clientID}_margin_account_fund.csv"
+                f"{datetime.today().strftime('%Y%m%d')}_{g_clientID}_fund.csv"
             )
             with open(fpath_macct_fund, 'w') as f:
                 i = 0
@@ -220,7 +277,7 @@ def OnRecvData(service_id, funcid, pdata, ndata, pRspInfo, nrequestid):
         if ANSINFO.contents.nResultType == JG_TDC_ANSRESULT_Success:
             fpath_holding = (
                 f"D:/data/trddata/investment_manager_products/hait_ehfz_api/"
-                f"{datetime.today().strftime('%Y%m%d')}_{g_clientID}_margin_account_holding.csv"
+                f"{datetime.today().strftime('%Y%m%d')}_{g_clientID}_holding.csv"
             )
             with open(fpath_holding, 'w') as f:
                 i = 0
@@ -274,7 +331,7 @@ def OnRecvData(service_id, funcid, pdata, ndata, pRspInfo, nrequestid):
         if ANSINFO.contents.nResultType == JG_TDC_ANSRESULT_Success:
             fpath_busbypos = (
                 f"D:/data/trddata/investment_manager_products/hait_ehfz_api/"
-                f"{datetime.today().strftime('%Y%m%d')}_{g_clientID}_margin_account_trade.csv"
+                f"{datetime.today().strftime('%Y%m%d')}_{g_clientID}_trade.csv"
             )
             with open(fpath_busbypos, 'w') as f:
                 list_fields_macct_busbypos = [
@@ -338,7 +395,7 @@ def OnRecvData(service_id, funcid, pdata, ndata, pRspInfo, nrequestid):
             ]
             fpath_security_loan_contract = (
                 f"D:/data/trddata/investment_manager_products/hait_ehfz_api"
-                f"/{datetime.today().strftime('%Y%m%d')}_{g_clientID}_margin_account_security_loan.csv"
+                f"/{datetime.today().strftime('%Y%m%d')}_{g_clientID}_security_loan.csv"
             )
             with open(fpath_security_loan_contract, 'w') as f:
                 f.write(','.join(list_keys_security_loan_contract) + '\n')
@@ -426,6 +483,18 @@ def query_cacct_holding(__g_serviceid):
         print("查询持仓失败")
 
 
+def query_cacct_order(__g_serviceid):
+    req = JGtdcReqQryOrder()
+    req.szClientID = bytes(g_clientID, encoding="gb2312")
+    req.nQueryMode = TJGtdcQueryMode.JG_TDC_QUERYMODE_All.value
+    req.nQueryDirection = int(bytes(JG_TDC_QUERYDIRECTION_Inverted, encoding="gb2312"))
+    temp = cast(pointer(req), c_char_p)
+    if 0 == API_TradeSend(__g_serviceid, TRADE_FUNCID_TYPE.JG_FUNCID_STOCK_QryEntrust.value, temp, 1, 0):
+        print("查询委托成功")
+    else:
+        print("查询委托失败")
+
+
 def query_cacct_trade(__g_serviceid):
     req = JGtdcReqQryTrade()
     req.szClientID = bytes(g_clientID, encoding="gb2312")
@@ -459,6 +528,18 @@ def query_macct_holding(__g_serviceid):
         print("查询持仓成功")
     else:
         print("查询持仓失败")
+
+
+def query_macct_order(__g_serviceid):
+    req = JGtdcReqQryOrder()
+    req.szClientID = bytes(g_clientID, encoding="gb2312")
+    req.nQueryMode = TJGtdcQueryMode.JG_TDC_QUERYMODE_All.value
+    req.nQueryDirection = int(bytes(JG_TDC_QUERYDIRECTION_Inverted, encoding="gb2312"))
+    temp = cast(pointer(req), c_char_p)
+    if 0 == API_TradeSend(__g_serviceid, TRADE_FUNCID_TYPE.JG_FUNCID_STOCK_QryEntrust.value, temp, 1, 0):
+        print("查询委托成功")
+    else:
+        print("查询委托失败")
 
 
 def query_macct_trade(__g_serviceid):

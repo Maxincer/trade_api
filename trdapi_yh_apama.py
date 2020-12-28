@@ -26,7 +26,7 @@ class GetTrdDataFromApamaFTP:
         self.usrname = 'root'
         self.psw = 'llys3,ysykR'
         self.i_uniqueid = 0
-        client_mongodb = MongoClient('mongodb://192.168.2.162:27017/')
+        client_mongodb = MongoClient('mongodb://192.168.2.162:27017/', username='Maxincer', password='winnerismazhe')
         db_basicinfo = client_mongodb['basicinfo']
         self.col_acctinfo = db_basicinfo['acctinfo']
         self.dt_today = datetime.today()
@@ -66,7 +66,7 @@ class GetTrdDataFromApamaFTP:
                     str_datetime = datetime.today().strftime('%H%M%S')
                     str_dat_file_server_list = f"{fn_dat_query}|{str_datetime}\n"
                     f.write(str_dat_file_server_list)
-            sleep(10)
+            sleep(30)
 
     def upload_dat(self):
         # upload
@@ -90,7 +90,7 @@ class GetTrdDataFromApamaFTP:
                 sleep(0.005)
                 sftp.put(fpath_local_dat_file_server_list, fpath_remote_dat_file_server_list)
                 print(f'{acctidbymxz} upload finished.')
-            sleep(10)
+            sleep(30)
 
     @staticmethod
     def remote_exist(sftp, path):
@@ -139,7 +139,7 @@ class GetTrdDataFromApamaFTP:
                     sftp.get(fpath_remote_dat_dealdetail, fpath_local_dat_dealdetail)
                     print(f'{acctidbymxz} download finished.')
 
-            sleep(10)
+            sleep(30)
 
     def run(self):
         thread_generate_dat = Thread(target=self.generate_dat)
