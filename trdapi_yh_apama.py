@@ -29,10 +29,10 @@ class GetTrdDataFromApamaFTP:
         client_mongodb = MongoClient('mongodb://192.168.2.162:27017/', username='Maxincer', password='winnerismazhe')
         db_basicinfo = client_mongodb['basicinfo']
         self.col_acctinfo = db_basicinfo['acctinfo']
-        self.dt_today = datetime.today()
-        self.str_today = self.dt_today.strftime('%Y%m%d')
         self.list_dicts_acctinfo = list(
-            self.col_acctinfo.find({'DataDate': self.str_today, 'DataSourceType': 'yh_apama', 'DataDownloadMark': 1})
+            self.col_acctinfo.find(
+                {'DataDate': datetime.today().strftime("%Y%m%d"), 'DataSourceType': 'yh_apama', 'DataDownloadMark': 1}
+            )
         )
         self.dirpath_output = 'D:/data/trddata/investment_manager_products/yh_apama'
 
@@ -49,7 +49,7 @@ class GetTrdDataFromApamaFTP:
                 dirpath_local = f'data/{acctid_apama}' ''
                 if not os.path.exists(dirpath_local):
                     os.mkdir(dirpath_local)
-                fn_dat_query = f'query_{self.str_today}.dat'
+                fn_dat_query = f'query_{datetime.today().strftime("%Y%m%d")}.dat'
                 fpath_dat_query = os.path.join(dirpath_local, fn_dat_query)
                 with open(fpath_dat_query, 'w') as f:
                     self.i_uniqueid += 1
@@ -60,7 +60,7 @@ class GetTrdDataFromApamaFTP:
                     str_dat_query_content += f'{self.i_uniqueid}|{acctidbybroker}|3|\n'
                     f.write(str_dat_query_content)
 
-                fn_dat_file_server_list = f"file_server_list_{self.str_today}.dat"
+                fn_dat_file_server_list = f'file_server_list_{datetime.today().strftime("%Y%m%d")}.dat'
                 fpath_dat_file_server_list = os.path.join(dirpath_local, fn_dat_file_server_list)
                 with open(fpath_dat_file_server_list, 'w') as f:
                     str_datetime = datetime.today().strftime('%H%M%S')
@@ -76,14 +76,14 @@ class GetTrdDataFromApamaFTP:
         while True:
             for dict_acctinfo in self.list_dicts_acctinfo:
                 acctidbymxz = dict_acctinfo['AcctIDByMXZ']
-                fn_dat_query = f'query_{self.str_today}.dat'
+                fn_dat_query = f'query_{datetime.today().strftime("%Y%m%d")}.dat'
                 acctid_apama = dict_acctinfo['DownloadDataFilter']
                 dirpath_local = f'data/{acctid_apama}'
                 fpath_local_dat_query = os.path.join(dirpath_local, fn_dat_query)
 
                 dirpath_remote = f'//home/{acctid_apama}'
                 fpath_remote_dat_query = f"{dirpath_remote}/{fn_dat_query}"
-                fn_dat_file_server_list = f"file_server_list_{self.str_today}.dat"
+                fn_dat_file_server_list = f'file_server_list_{datetime.today().strftime("%Y%m%d")}.dat'
                 fpath_remote_dat_file_server_list = f"{dirpath_remote}/{fn_dat_file_server_list}"
                 fpath_local_dat_file_server_list = os.path.join(dirpath_local, fn_dat_file_server_list)
                 sftp.put(fpath_local_dat_query, fpath_remote_dat_query)
@@ -111,9 +111,9 @@ class GetTrdDataFromApamaFTP:
         while True:
             for dict_acctinfo in self.list_dicts_acctinfo:
                 acctidbymxz = dict_acctinfo['AcctIDByMXZ']
-                fn_dat_fund = f'fund_{self.str_today}.dat'
-                fn_dat_stock = f'stock_{self.str_today}.dat'
-                fn_dat_dealdetail = f'dealdetail_{self.str_today}.dat'
+                fn_dat_fund = f'fund_{datetime.today().strftime("%Y%m%d")}.dat'
+                fn_dat_stock = f'stock_{datetime.today().strftime("%Y%m%d")}.dat'
+                fn_dat_dealdetail = f'dealdetail_{datetime.today().strftime("%Y%m%d")}.dat'
                 acctid_apama = dict_acctinfo['DownloadDataFilter']
                 dirpath_local = f'{self.dirpath_output}/{acctid_apama}'
                 if not os.path.exists(dirpath_local):

@@ -65,6 +65,8 @@ class DldTrdDataFromEHFZApi:
             sleep(0.2)
             query_macct_holding(self.g_serviceid)
             sleep(0.2)
+            query_macct_order(self.g_serviceid)
+            sleep(5)
             query_macct_trade(self.g_serviceid)
             sleep(5)
             query_short_sell(self.g_serviceid)
@@ -84,6 +86,8 @@ class DldTrdDataFromEHFZApi:
                 accttype = dict_acctinfo['AcctType']
                 self.dlddata_by_acctidbymxz(acctidbybroker, accttype)
                 print(f'{acctidbybroker} dld finished.')
+            # self.dlddata_by_acctidbymxz('1882842000', 'm')
+
             sleep(10)
 
 

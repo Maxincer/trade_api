@@ -153,7 +153,7 @@ def OnRecvData(service_id, funcid, pdata, ndata, pRspInfo, nrequestid):
                     str_dataline_csv_order = ','.join(list_values_cacct_order)
                     f.write(str_dataline_csv_order + '\n')
                     i = i + 1
-            print("成交查询个数： %d" % ANSINFO.contents.nFieldItem)
+            print("委托查询个数： %d" % ANSINFO.contents.nFieldItem)
         else:
             print(
                 "[应答 Link %d]成交查询失败， Error： %s"
@@ -516,7 +516,6 @@ def query_macct_fund(__g_serviceid):
         print("查询资金成功")
     else:
         print("查询资金失败")
-
 
 def query_macct_holding(__g_serviceid):
     req = JGtdcReqQryHold()
