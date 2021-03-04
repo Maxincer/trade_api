@@ -24,7 +24,7 @@ class DldTrdDataFromEHFZApi:
         self.dt_today = datetime.today()
         self.str_today = self.dt_today.strftime('%Y%m%d')
         self.list_dicts_acctinfo = list(
-            self.col_acctinfo.find({'DataDate': self.str_today, 'DataSourceType': 'hait_ehfz', 'DataDownloadMark': 1})
+            self.col_acctinfo.find({'DataDate': self.str_today, 'DataSourceType': 'hait_ehfz_api', 'DataDownloadMark': 1})
         )
         self.dirpath_output = 'D:/data/trddata/investment_manager_products/hait_ehfz'
         self.g_serviceid = ''
@@ -40,7 +40,12 @@ class DldTrdDataFromEHFZApi:
             register_Datacallback(self.g_serviceid, self._jgtradeapi_data_cb_)
             API_Connect(self.g_serviceid, c_char_p(b"124.74.252.82"), 8980, False)  # 此处传参： 交易服务器参数
             sleep(0.1)
-            log_in(acctidbybroker, '123321', self.g_serviceid)
+            if acctidbybroker in ['0620103849', '0622228888']:
+                log_in(acctidbybroker, '501062', self.g_serviceid)
+            elif acctidbybroker in ['0628888888']:
+                log_in(acctidbybroker, '106289', self.g_serviceid)
+            else:
+                log_in(acctidbybroker, '123321', self.g_serviceid)
             sleep(1)
             query_cacct_fund(self.g_serviceid)
             sleep(0.2)

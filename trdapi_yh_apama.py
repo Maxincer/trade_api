@@ -86,7 +86,11 @@ class GetTrdDataFromApamaFTP:
                 fn_dat_file_server_list = f'file_server_list_{datetime.today().strftime("%Y%m%d")}.dat'
                 fpath_remote_dat_file_server_list = f"{dirpath_remote}/{fn_dat_file_server_list}"
                 fpath_local_dat_file_server_list = os.path.join(dirpath_local, fn_dat_file_server_list)
-                sftp.put(fpath_local_dat_query, fpath_remote_dat_query)
+                if os.path.exists(fpath_local_dat_query):
+                    sftp.put(fpath_local_dat_query, fpath_remote_dat_query)
+                else:
+                    print(f'{fpath_local_dat_query} not found, sleep 120s')
+                    sleep(120)
                 sleep(0.005)
                 sftp.put(fpath_local_dat_file_server_list, fpath_remote_dat_file_server_list)
                 print(f'{acctidbymxz} upload finished.')

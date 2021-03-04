@@ -70,7 +70,7 @@ def OnRecvData(service_id, funcid, pdata, ndata, pRspInfo, nrequestid):
             with open(fpath_holding, 'w') as f:
                 i = 0
                 list_keys_holding = [
-                    '资金账号', '代码', '市场', '昨日持仓量', '股份余额', '可卖数量',
+                    '营业部号', '客户号', '资金账号', '股东代码', '证券代码', '证券名称', '市场类型', '昨日持仓量', '股份余额', '可卖数量',
                     '可申购数量', '当前拥股数量', '成本价格', '证券市值', '浮动盈亏'
                 ]
                 f.write(','.join(list_keys_holding) + '\n')
@@ -80,8 +80,12 @@ def OnRecvData(service_id, funcid, pdata, ndata, pRspInfo, nrequestid):
                     Ans = cast(pTmpData, POINTER(JGtdcRspQryHold))
                     list_values_cacct_holding = [
                         str(x) for x in [
+                            Ans.contents.szBranchNo.decode("gb2312", errors='ignore'),
+                            Ans.contents.szClientID.decode("gb2312", errors='ignore'),
                             Ans.contents.szFundAccount.decode("gb2312", errors='ignore'),
+                            Ans.contents.szStockAccount.decode("gb2312", errors='ignore'),
                             Ans.contents.szStockCode.decode("gb2312", errors='ignore'),
+                            Ans.contents.szStockName.decode("gb2312", errors='ignore'),
                             Ans.contents.nExchangeType,
                             Ans.contents.iYdAmount,
                             Ans.contents.iStockAmount,
@@ -243,8 +247,8 @@ def OnRecvData(service_id, funcid, pdata, ndata, pRspInfo, nrequestid):
                         str(x) for x in [
                             Ans.contents.szBranchNo.decode("gb2312", errors='ignore'),
                             Ans.contents.szClientID.decode("gb2312", errors='ignore'),
-                            Ans.contents.szFundAccount,
-                            Ans.contents.cMoneyType,
+                            Ans.contents.szFundAccount.decode("gb2312", errors='ignore'),
+                            Ans.contents.cMoneyType.decode("gb2312", errors='ignore'),
                             Ans.contents.dEnableBalance,
                             Ans.contents.dFetchBalance,
                             Ans.contents.dFrozenBalance,
@@ -512,10 +516,11 @@ def query_macct_fund(__g_serviceid):
     req.szClientID = bytes(g_clientID, encoding="gb2312")
     req.nQueryMode = TJGtdcQueryMode.JG_TDC_QUERYMODE_All.value
     temp = cast(pointer(req), c_char_p)
-    if 0 == API_TradeSend(__g_serviceid, TRADE_FUNCID_TYPE.JG_FUNCID_CREDIT_QryFund.value, temp, 1, 0):
-        print("查询资金成功")
+    if 0 == API_TradeSend(__g_serviceid, TRADE_FUNCID_TYPE.JG_FUNCID_CREDIT_QryAssets.value, temp, 1, 0):
+        print("查询信用资产成功")
     else:
-        print("查询资金失败")
+        print("查询信用资产失败")
+
 
 def query_macct_holding(__g_serviceid):
     req = JGtdcReqQryHold()
