@@ -52,12 +52,12 @@ class GetTrdDataFromApamaFTP:
                 fn_dat_query = f'query_{datetime.today().strftime("%Y%m%d")}.dat'
                 fpath_dat_query = os.path.join(dirpath_local, fn_dat_query)
                 with open(fpath_dat_query, 'w') as f:
-                    self.i_uniqueid += 1
-                    str_dat_query_content = f'{self.i_uniqueid}|{acctidbybroker}|1|\n'
-                    self.i_uniqueid += 1
-                    str_dat_query_content += f'{self.i_uniqueid}|{acctidbybroker}|2|\n'
-                    self.i_uniqueid += 1
-                    str_dat_query_content += f'{self.i_uniqueid}|{acctidbybroker}|3|\n'
+                    # self.i_uniqueid += 1
+                    str_dat_query_content = f'{datetime.now().strftime("%Y%m%d%H%M%S")}001|{acctidbybroker}|1|\n'
+                    # self.i_uniqueid += 1
+                    str_dat_query_content += f'{datetime.now().strftime("%Y%m%d%H%M%S")}002|{acctidbybroker}|2|\n'
+                    # self.i_uniqueid += 1
+                    str_dat_query_content += f'{datetime.now().strftime("%Y%m%d%H%M%S")}003|{acctidbybroker}|3|\n'
                     f.write(str_dat_query_content)
 
                 fn_dat_file_server_list = f'file_server_list_{datetime.today().strftime("%Y%m%d")}.dat'

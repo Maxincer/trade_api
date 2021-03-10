@@ -1,7 +1,10 @@
 import os
 import shutil
-import datetime
+from datetime import datetime
 import time
+
+from pymongo import MongoClient
+
 
 
 def transfer_data(from_path, target_path, today_date):
@@ -12,7 +15,7 @@ def transfer_data(from_path, target_path, today_date):
         for file in files:
             file_path = os.path.join(root + '/' + file)
             struct_time = time.localtime(os.stat(file_path).st_mtime)
-            file_date = str(datetime.datetime(*struct_time[:3]).date()).replace('-', '')
+            file_date = str(datetime(*struct_time[:3]).date()).replace('-', '')
             if file_date == today_date:
                 # 是否taget_path有该dictionary
                 dir_list = root.split('/')[-1].split('\\')[1:]
@@ -29,11 +32,22 @@ def transfer_data(from_path, target_path, today_date):
 
 
 if __name__ == '__main__':
-    today_date = str(datetime.datetime.today().date()).replace('-', '')
-    # today_date = '20210223'
+    str_today = datetime.today().strftime('%Y%m%d')
+    server_mongodb = MongoClient(
+        'mongodb://192.168.2.162:27017/', username='Maxincer', password='winnerismazhe'
+    )
+    db_global = server_mongodb['global']
+    col_trdcalendar = db_global['trade_calendar']
+
+    list_str_trdcalendar = []
+    for _ in col_trdcalendar.find():
+        list_str_trdcalendar += _['Data']
+    idx_str_today = list_str_trdcalendar.index(str_today)
+    str_last_trddate = list_str_trdcalendar[idx_str_today - 1]
+
     from_path = 'D:/data/trddata'
-    target_path = f'D:/data/post_trade_data/{today_date}'
-    transfer_data(from_path, target_path, today_date)
+    target_path = f'D:/data/post_trade_data/{str_last_trddate}'
+    transfer_data(from_path, target_path, str_last_trddate)
     print('Done')
 
 
